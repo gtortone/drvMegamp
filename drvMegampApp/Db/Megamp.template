@@ -1,0 +1,21 @@
+file db/Megamp.db
+{
+pattern
+{P,  		MOD,	CH  }
+{MEGAMP,	2,	0   }
+{MEGAMP,	2,	1   }
+{MEGAMP,	2,	2   }
+{MEGAMP,	2,	3   }
+{MEGAMP,	2,	4   }
+{MEGAMP,	2,	5   }
+{MEGAMP,	2,	6   }
+{MEGAMP,	2,	7   }
+{MEGAMP,	2,	8   }
+{MEGAMP,	2,	9   }
+{MEGAMP,	2,	10  }
+{MEGAMP,	2,	11  }
+{MEGAMP,	2,	12  }
+{MEGAMP,	2,	13  }
+{MEGAMP,	2,	14  }
+{MEGAMP,	2,	15  }
+}

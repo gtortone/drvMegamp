@@ -1,0 +1,407 @@
+
+### pvcopy.st records ###
+
+record(bo,"$(P):COPY:DO") {
+   field(SCAN,"Passive")
+   field(HIGH,"1")
+   field(VAL,"0")
+}
+
+record(longout,"$(P):COPY:MOD:SRC") {
+   field(SCAN,"Passive")
+   field(DRVL,"0")
+   field(DRVH,"15")
+   # only module #2 exists
+   field(VAL,"2")
+}
+
+record(longout,"$(P):COPY:MOD:DEST") {
+   field(SCAN,"Passive")
+   field(DRVL,"0")
+   field(DRVH,"15")
+   # only module #2 exists
+   field(VAL,"2")
+}
+
+record(longout,"$(P):COPY:CH:SRC") {
+   field(SCAN,"Passive")
+   field(DRVL,"0")
+   field(DRVH,"15")
+   field(VAL,"0")
+}
+
+record(mbbo,"$(P):COPY:CH:DEST") {
+   field(SCAN,"Passive")
+   field(NOBT,"16")
+   field(VAL,"0")
+}
+
+record(mbbo,"$(P):COPY:ATTR") {
+   field(SCAN,"Passive")
+   field(NOBT,"16")
+   field(VAL,"0")
+}
+
+record(mbbo,"$(P):COPY:STATUS") {
+   field(SCAN,"Passive")
+   field(ZRVL,"0")
+   field(ONVL,"1")
+   field(ZRST,"IDLE")
+   field(ONST,"RUNNING")
+   field(VAL,"0")
+}
+
+record(mbbo,"$(P):COPY:RESULT:VAL") {
+   field(SCAN,"Passive")
+   field(ZRVL,"0")
+   field(ONVL,"1")
+   field(ZRST,"OK")
+   field(ONST,"ERROR")
+   field(VAL,"0")
+}
+
+record(stringout, "$(P):COPY:RESULT:MSG") {
+   field(VAL,"")
+}
+
+### IOC records ###
+
+record(stringout, "$(P):M$(MOD):NAME") {
+   field(VAL,"(empty)")
+}
+
+# record used to "touch" (read a setting of a channel)
+# in order to set that channel on Megamp output
+record(bo,"$(P):M$(MOD):CH$(CH):OUT") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto rd_attr($(MOD),$(CH),0) PS1") 
+   field(HIGH,"0.5")
+   field(VAL,"0")
+}
+
+#record(longout,"$(P):MOD:OUTPUT") {
+#   field(SCAN,"Passive")
+#   field(LOPR,"0")
+#   field(DRVL,"0")
+#   field(HOPR,"15")
+#   field(DRVH,"15")
+#   field(VAL,"2")
+#   field(PINI,"1")
+#}
+
+#record(longout,"$(P):CH:OUTPUT") {
+#   field(SCAN,"Passive")
+#   field(LOPR,"0")
+#   field(DRVL,"0")
+#   field(HOPR,"15")
+#   field(DRVH,"15")
+#   field(VAL,"0")
+#   field(PINI,"1")
+#}
+
+#record(calcout, "$(P):OUTPUT") {
+#   field(SCAN,"1 second")
+#   field(DTYP,"stream")
+#   field(INPA,"$(P):MOD:OUTPUT")
+#   field(INPB,"$(P):CH:OUTPUT")
+#   field(CALC,"0")
+#   field(OUT, "@Megamp.proto sel_channel PS1")
+#   field(PINI,"1")
+#   field(MDEL,"-1")
+#}
+
+### ADDRESS 0 ###
+### in attesa di modifica firmware PIC - Alfonso ###
+
+record(longout,"$(P):M$(MOD):CH$(CH):Attr:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),$(CH),0) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"255")
+   field(DRVH,"255")
+   alias("$(P):M$(MOD):CH$(CH):ATTR0:RAW")
+   info(autosaveFields_pass0, "VAL")
+}
+
+## ADDRESS 1 ###
+
+record(longout,"$(P):M$(MOD):CH$(CH):ATTR1:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),$(CH),1) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"191")
+   field(DRVH,"191")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR1:CALCVAL")
+   alias("$(P):M$(MOD):CH$(CH):Finegain:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR1:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR1:RAW")
+   field(CALC,"(A * 0.0157) + 1")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR1:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):CH$(CH):ATTR1:VAL") {
+   field(SCAN,"Passive")
+   field(EGU,"X")
+   field(LOPR,"1")
+   field(DRVL,"1")
+   field(HOPR,"4")
+   field(DRVH,"4")
+   field(PREC,"1")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR1:CALCRAW")
+   alias("$(P):M$(MOD):CH$(CH):Finegain:VAL")
+   info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR1:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR1:VAL")
+   field(CALC,"(A * 63.7) - 63.7")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR1:RAW PP")
+}
+
+## ADDRESS 2 ###
+
+record(longout,"$(P):M$(MOD):CH$(CH):ATTR2:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),$(CH),2) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"255")
+   field(DRVH,"255")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR2:CALCVAL")
+   alias("$(P):M$(MOD):CH$(CH):Polezero:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR2:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR2:RAW")
+   field(CALC,"2000 - (A * 7.647)")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR2:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):CH$(CH):ATTR2:VAL") {
+   field(SCAN,"Passive")
+   field(EGU,"us")
+   field(LOPR,"50")
+   field(DRVL,"50")
+   field(HOPR,"2000")
+   field(DRVH,"2000")
+   field(PREC,"0")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR2:CALCRAW")
+   alias("$(P):M$(MOD):CH$(CH):Polezero:VAL")
+   info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR2:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR2:VAL")
+   field(CALC,"(2000 - A) / 7.647")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR2:RAW PP")
+}
+
+## ADDRESS 3 ###
+
+record(longout,"$(P):M$(MOD):CH$(CH):ATTR3:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),$(CH),3) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"127")
+   field(DRVH,"127")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR3:CALCVAL")
+   alias("$(P):M$(MOD):CH$(CH):CFDwidth:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR3:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR3:RAW")
+   field(CALC,"(A / 0.3175) + 200")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR3:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):CH$(CH):ATTR3:VAL") {
+   field(SCAN,"Passive")
+   field(EGU,"ns")
+   field(LOPR,"200")
+   field(DRVL,"200")
+   field(HOPR,"600")
+   field(DRVH,"600")
+   field(PREC,"0")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR3:CALCRAW")
+   alias("$(P):M$(MOD):CH$(CH):CFDwidth:VAL")
+   info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR3:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR3:VAL")
+   field(CALC,"(A - 200) * 0.3175")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR3:RAW PP")
+}
+
+## ADDRESS 4 ###
+
+record(longout,"$(P):M$(MOD):CH$(CH):ATTR4:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),$(CH),4) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"4095")
+   field(DRVH,"4095")
+   field(EGU,"mV")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR4:CALCVAL")
+   alias("$(P):M$(MOD):CH$(CH):CFDthreshold:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR4:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR4:RAW")
+   field(CALC,"A")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR4:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):CH$(CH):ATTR4:VAL") {
+   field(SCAN,"Passive")
+   field(EGU,"mV")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"4095")
+   field(DRVH,"4095")
+   field(PREC,"0")
+   field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR4:CALCRAW")
+   alias("$(P):M$(MOD):CH$(CH):CFDthreshold:VAL")
+   info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout,"$(P):M$(MOD):CH$(CH):ATTR4:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):CH$(CH):ATTR4:VAL")
+   field(CALC,"A")
+   field(OUT,"$(P):M$(MOD):CH$(CH):ATTR4:RAW PP")
+}
+
+### ADDRESS 17 (ch 16, addr 0) ###
+
+record(longout,"$(P):M$(MOD):ATTR17:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),16,0) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"4095")
+   field(DRVH,"4095")
+   field(FLNK,"$(P):M$(MOD):ATTR17:CALCVAL")
+   #alias("$(P):M$(MOD):Multhreshold:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):ATTR17:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):ATTR17:RAW")
+   field(CALC,"(A + 50) / 100")
+   field(OUT,"$(P):M$(MOD):ATTR17:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):ATTR17:VAL") {
+   field(SCAN,"Passive")
+   field(LOPR,"1")
+   field(DRVL,"1")
+   field(HOPR,"16")
+   field(DRVH,"16")
+   field(PREC,"0")
+   field(FLNK,"$(P):M$(MOD):ATTR17:CALCRAW")
+   info(autosaveFields_pass0, "VAL")
+   #alias("$(P):M$(MOD):Multhreshold:VAL")
+}
+
+record(calcout,"$(P):M$(MOD):ATTR17:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):ATTR17:VAL")
+   field(CALC,"(A * 100) - 50")
+   field(OUT,"$(P):M$(MOD):ATTR17:RAW PP")
+}
+
+### ADDRESS 18 (ch 16, addr 1) ###
+
+record(longout,"$(P):M$(MOD):ATTR18:RAW") {
+   field(SCAN,"Passive")
+   field(DTYP,"stream")
+   field(OUT,"@Megamp.proto wr_attr($(MOD),16,1) PS1")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"4095")
+   field(DRVH,"4095")
+   field(FLNK,"$(P):M$(MOD):ATTR18:CALCVAL")
+   #alias("$(P):M$(MOD):TACrange:RAW")
+   field(PINI,"1")
+}
+
+record(calcout,"$(P):M$(MOD):ATTR18:CALCVAL") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):ATTR18:RAW")
+   field(CALC,"(3200000 / A)")
+   field(OUT,"$(P):M$(MOD):ATTR18:VAL PP")
+}
+
+record(ao,"$(P):M$(MOD):ATTR18:VAL") {
+   field(SCAN,"Passive")
+   field(EGU,"ns")
+   field(LOPR,"780")
+   field(DRVL,"780")
+   field(HOPR,"3200")
+   field(DRVH,"3200")
+   field(PREC,"0")
+   field(FLNK,"$(P):M$(MOD):ATTR18:CALCRAW")
+   info(autosaveFields_pass0, "VAL")
+   #alias("$(P):M$(MOD):TACrange:VAL")
+}
+
+record(calcout,"$(P):M$(MOD):ATTR18:CALCRAW") {
+   field(SCAN,"Passive")
+   field(INPA,"$(P):M$(MOD):ATTR18:VAL")
+   field(CALC,"(3200000 / A)")
+   field(OUT,"$(P):M$(MOD):ATTR18:RAW PP")
+}
+
+### CSS display records ###
+
+record(longout,"$(P):MOD:SEL") {
+   field(SCAN,"Passive")
+   field(LOPR,"0")
+   field(DRVL,"0")
+   field(HOPR,"15")
+   field(DRVH,"15")
+   field(VAL,"2")
+   field(OUT,"data-fanout PP")
+   field(PINI,"1")
+}
+
+record(dfanout,"data-fanout") {
+   field(SELM,"Mask")
+   field(SELN,"7")	# OUTA, OUTB and OUTC will be used
+   field(OUTA,"$(P):COPY:MOD:SRC PP")
+   field(OUTB,"$(P):COPY:MOD:DEST PP")
+   field(OUTC,"$(P):MOD:OUTPUT PP")	# when user changes module display changes also signal output module
+}
+
+### DEBUG ###
+
+record(stringout,"$(P):debug") {
+   field(DTYP, "stream")
+   field(OUT,"@Megamp.proto debug PS1")
+}
