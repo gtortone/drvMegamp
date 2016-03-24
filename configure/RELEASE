@@ -32,4 +32,3 @@ EPICS_BASE=/opt/epics/base
 #RULES=/path/to/epics/support/module/rules/x-y
 ASYN=/opt/epics/support/asyn4-29
 SEQ=/opt/epics/support/seq-2.2.3
-AUTOSAVE=/opt/epics/support/autosave-R5-7-1

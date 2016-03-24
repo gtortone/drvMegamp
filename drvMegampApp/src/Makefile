@@ -5,10 +5,32 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
-SNC=/opt/epics/support/seq-2.2.3/bin/linux-arm/snc
+## DBD += as.dbd
+## DBD += asSupport.dbd
+
+# include files
+INC += osdNfs.h
+
+#=============================
+# Build custom autosave library
+
+LIBRARY_IOC += autosave
+
+# os independent code
+autosave_SRCS += dbrestore.c save_restore.c
+autosave_SRCS += initHooks.c fGetDateStr.c
+autosave_SRCS += configMenuSub.c verify.c
+
+# os dependent code
+autosave_SRCS += osdNfs.c
+
+autosave_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 #=============================
 # Build the IOC application
+
+SNC=/opt/epics/support/seq-2.2.3/bin/linux-arm/snc
+AUTOSAVE=$(TOP)/lib/linux-arm
 
 PROD_IOC = drvMegamp
 # drvMegamp.dbd will be created and installed
@@ -24,9 +46,6 @@ drvMegamp_DBD += asSupport.dbd
 drvMegamp_DBD += system.dbd
 drvMegamp_DBD += pvcopy.dbd
 drvMegamp_DBD += drvAsynSerialPort.dbd 
-
-# Include dbd files from all support applications:
-#drvMegamp_DBD += xxx.dbd
 
 # Add all the support libraries needed by this IOC
 drvMegamp_LIBS += stream
@@ -49,6 +68,4 @@ drvMegamp_LIBS += $(EPICS_BASE_IOC_LIBS)
 #===========================
 
 include $(TOP)/configure/RULES
-#----------------------------------------
-#  ADD RULES AFTER THIS LINE
 

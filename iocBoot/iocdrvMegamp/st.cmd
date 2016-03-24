@@ -37,7 +37,7 @@ system("install -m 777 -d ${PWD}/as/req")
 dbLoadRecords("$(TOP)/db/save_restoreStatus.db","P=MEGAMP:,CONFIG=as")
 dbLoadRecords("$(TOP)/db/configMenu.db","P=MEGAMP:,CONFIG=as")
 ## set_pass0_restoreFile("ioc_settings.sav")
-## var save_restoreDebug 5
+## var save_restoreDebug 10
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
