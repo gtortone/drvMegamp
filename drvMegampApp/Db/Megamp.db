@@ -68,6 +68,7 @@ record(stringout, "$(P):COPY:RESULT:MSG") {
 
 record(stringout, "$(P):M$(MOD):NAME") {
    field(VAL,"(empty)")
+   info(autosaveFields_pass0, "VAL")
 }
 
 # record used to "touch" (read a setting of a channel)
@@ -79,37 +80,6 @@ record(bo,"$(P):M$(MOD):CH$(CH):OUT") {
    field(HIGH,"0.5")
    field(VAL,"0")
 }
-
-#record(longout,"$(P):MOD:OUTPUT") {
-#   field(SCAN,"Passive")
-#   field(LOPR,"0")
-#   field(DRVL,"0")
-#   field(HOPR,"15")
-#   field(DRVH,"15")
-#   field(VAL,"2")
-#   field(PINI,"1")
-#}
-
-#record(longout,"$(P):CH:OUTPUT") {
-#   field(SCAN,"Passive")
-#   field(LOPR,"0")
-#   field(DRVL,"0")
-#   field(HOPR,"15")
-#   field(DRVH,"15")
-#   field(VAL,"0")
-#   field(PINI,"1")
-#}
-
-#record(calcout, "$(P):OUTPUT") {
-#   field(SCAN,"1 second")
-#   field(DTYP,"stream")
-#   field(INPA,"$(P):MOD:OUTPUT")
-#   field(INPB,"$(P):CH:OUTPUT")
-#   field(CALC,"0")
-#   field(OUT, "@Megamp.proto sel_channel PS1")
-#   field(PINI,"1")
-#   field(MDEL,"-1")
-#}
 
 ### ADDRESS 0 ###
 ### in attesa di modifica firmware PIC - Alfonso ###
@@ -138,6 +108,7 @@ record(longout,"$(P):M$(MOD):CH$(CH):ATTR1:RAW") {
    field(DRVH,"191")
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR1:CALCVAL")
    alias("$(P):M$(MOD):CH$(CH):Finegain:RAW")
+   info(autosaveFields_pass0, "VAL")
    field(PINI,"1")
 }
 
@@ -158,7 +129,6 @@ record(ao,"$(P):M$(MOD):CH$(CH):ATTR1:VAL") {
    field(PREC,"1")
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR1:CALCRAW")
    alias("$(P):M$(MOD):CH$(CH):Finegain:VAL")
-   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR1:CALCRAW") {
@@ -181,6 +151,7 @@ record(longout,"$(P):M$(MOD):CH$(CH):ATTR2:RAW") {
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR2:CALCVAL")
    alias("$(P):M$(MOD):CH$(CH):Polezero:RAW")
    field(PINI,"1")
+   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR2:CALCVAL") {
@@ -200,7 +171,6 @@ record(ao,"$(P):M$(MOD):CH$(CH):ATTR2:VAL") {
    field(PREC,"0")
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR2:CALCRAW")
    alias("$(P):M$(MOD):CH$(CH):Polezero:VAL")
-   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR2:CALCRAW") {
@@ -223,6 +193,7 @@ record(longout,"$(P):M$(MOD):CH$(CH):ATTR3:RAW") {
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR3:CALCVAL")
    alias("$(P):M$(MOD):CH$(CH):CFDwidth:RAW")
    field(PINI,"1")
+   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR3:CALCVAL") {
@@ -242,7 +213,6 @@ record(ao,"$(P):M$(MOD):CH$(CH):ATTR3:VAL") {
    field(PREC,"0")
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR3:CALCRAW")
    alias("$(P):M$(MOD):CH$(CH):CFDwidth:VAL")
-   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR3:CALCRAW") {
@@ -266,6 +236,7 @@ record(longout,"$(P):M$(MOD):CH$(CH):ATTR4:RAW") {
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR4:CALCVAL")
    alias("$(P):M$(MOD):CH$(CH):CFDthreshold:RAW")
    field(PINI,"1")
+   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR4:CALCVAL") {
@@ -285,7 +256,6 @@ record(ao,"$(P):M$(MOD):CH$(CH):ATTR4:VAL") {
    field(PREC,"0")
    field(FLNK,"$(P):M$(MOD):CH$(CH):ATTR4:CALCRAW")
    alias("$(P):M$(MOD):CH$(CH):CFDthreshold:VAL")
-   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):CH$(CH):ATTR4:CALCRAW") {
@@ -308,6 +278,7 @@ record(longout,"$(P):M$(MOD):ATTR17:RAW") {
    field(FLNK,"$(P):M$(MOD):ATTR17:CALCVAL")
    #alias("$(P):M$(MOD):Multhreshold:RAW")
    field(PINI,"1")
+   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):ATTR17:CALCVAL") {
@@ -325,7 +296,6 @@ record(ao,"$(P):M$(MOD):ATTR17:VAL") {
    field(DRVH,"16")
    field(PREC,"0")
    field(FLNK,"$(P):M$(MOD):ATTR17:CALCRAW")
-   info(autosaveFields_pass0, "VAL")
    #alias("$(P):M$(MOD):Multhreshold:VAL")
 }
 
@@ -349,6 +319,7 @@ record(longout,"$(P):M$(MOD):ATTR18:RAW") {
    field(FLNK,"$(P):M$(MOD):ATTR18:CALCVAL")
    #alias("$(P):M$(MOD):TACrange:RAW")
    field(PINI,"1")
+   info(autosaveFields_pass0, "VAL")
 }
 
 record(calcout,"$(P):M$(MOD):ATTR18:CALCVAL") {
@@ -367,7 +338,6 @@ record(ao,"$(P):M$(MOD):ATTR18:VAL") {
    field(DRVH,"3200")
    field(PREC,"0")
    field(FLNK,"$(P):M$(MOD):ATTR18:CALCRAW")
-   info(autosaveFields_pass0, "VAL")
    #alias("$(P):M$(MOD):TACrange:VAL")
 }
 
@@ -393,10 +363,9 @@ record(longout,"$(P):MOD:SEL") {
 
 record(dfanout,"data-fanout") {
    field(SELM,"Mask")
-   field(SELN,"7")	# OUTA, OUTB and OUTC will be used
+   field(SELN,"3")	# OUTA, OUTB and OUTC will be used
    field(OUTA,"$(P):COPY:MOD:SRC PP")
    field(OUTB,"$(P):COPY:MOD:DEST PP")
-   field(OUTC,"$(P):MOD:OUTPUT PP")	# when user changes module display changes also signal output module
 }
 
 ### DEBUG ###
